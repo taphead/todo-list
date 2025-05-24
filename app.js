@@ -50,7 +50,7 @@ function handleSubmit() {
 
   inputElement.value && listElement.appendChild(newListItem);
   itemArray.push(listTextSpan.textContent);
-  localStorage.setItem("itemList", JSON.stringify(itemArray));
+  updateLocalStorage(itemArray);
   inputElement.value = "";
 }
 
@@ -59,7 +59,7 @@ function handleDelete(e) {
   const listItemTextSpan = listItem.querySelector("span");
 
   itemArray = itemArray.filter((val) => val != listItemTextSpan.textContent);
-  localStorage.setItem("itemList", JSON.stringify(itemArray));
+  updateLocalStorage(itemArray);
 
   e.target.parentElement.remove();
   if (isEditClicked) {
@@ -89,8 +89,12 @@ function handleEditSubmit(e) {
   oldText = listItemTextSpan.textContent;
   listItemTextSpan.textContent = inputElement.value;
   itemArray = itemArray.map((str) => str.replace(oldText, inputElement.value));
-  localStorage.setItem("itemList", JSON.stringify(itemArray));
+  updateLocalStorage(itemArray);
   e.target.remove();
   inputElement.value = "";
   isEditClicked = false;
+}
+
+function updateLocalStorage(itemArray) {
+  localStorage.setItem("itemList", JSON.stringify(itemArray));
 }
